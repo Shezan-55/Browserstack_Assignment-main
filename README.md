@@ -2,202 +2,266 @@
 
 ---
 
-## 📌 Project Summary
+## 📌 Project Overview
 
-This project demonstrates a complete automation testing workflow built using Selenium and executed across cloud devices using BrowserStack.
+This project demonstrates a complete automation testing pipeline built using Selenium and executed across real devices and browsers using **BrowserStack Automate**.
 
-The solution performs automated web scraping from the El País Opinion section, integrates with a translation API, performs text analytics, and validates cross-browser compatibility using parallel cloud execution.
+The solution:
 
-This project simulates a real-world Customer Engineering scenario involving:
-- Customer environment validation
-- Automation reliability
-- Cloud test execution
-- API + automation integration
+* Scrapes articles from the *El País Opinion* section
+* Translates article titles using Google Translate API (via RapidAPI)
+* Performs text frequency analysis
+* Executes cross-browser tests in parallel on BrowserStack cloud infrastructure
+
+It simulates a real-world **Customer Engineering / Pre-sales Automation scenario** involving:
+
+* Environment validation
+* Cloud execution
+* API integration
+* Parallel testing
+* Logging & monitoring
 
 ---
 
 ## 🎯 Problem Statement
 
-Build an automation solution that:
+Build an automation framework that:
 
-- Scrapes articles from a live news website
-- Integrates with an external translation API
-- Performs text analysis
-- Executes cross-browser validation on real devices
-- Runs tests in parallel on BrowserStack cloud infrastructure
+* Scrapes live dynamic content
+* Integrates with external APIs
+* Processes and analyzes text data
+* Validates functionality across multiple browsers & devices
+* Executes tests in parallel on cloud infrastructure
 
 ---
 
 ## 🏗 System Architecture
 
-            ┌─────────────────────┐
-            │   Local Python App  │
-            │  (Selenium Scripts) │
-            └──────────┬──────────┘
-                       │
-                       │ HTTP Requests
-                       ▼
-          ┌─────────────────────────┐
-          │     El País Website     │
-          │  (Article Data Source)  │
-          └─────────────────────────┘
-
-                       │
-                       │ Article Titles
-                       ▼
-
-          ┌─────────────────────────┐
-          │  RapidAPI Google        │
-          │  Translation Service    │
-          └─────────────────────────┘
-
-                       │
-                       │ Translated Titles
-                       ▼
-
-          ┌─────────────────────────┐
-          │ Text Processing Engine  │
-          │ Word Frequency Analysis │
-          └─────────────────────────┘
-
-                       │
-                       │ Test Execution Requests
-                       ▼
-
-          ┌─────────────────────────┐
-          │ BrowserStack Cloud      │
-          │ Parallel Device Testing │
-          └─────────────────────────┘
-
-                       │
-                       ▼
-               Execution Logs + Results
+```
+Local Python App (Selenium)
+        │
+        ▼
+El País Website (Data Source)
+        │
+        ▼
+Google Translate API (RapidAPI)
+        │
+        ▼
+Text Analytics Engine
+        │
+        ▼
+BrowserStack Cloud (Parallel Execution)
+        │
+        ▼
+Execution Logs & Results
+```
 
 ---
 
 ## 🔄 Execution Flow
 
-### Phase 1 — Data Collection
-- Open El País Opinion section
-- Extract first 5 valid articles
-- Extract Spanish article content
-- Download article images
+### Phase 1 — Web Scraping
 
----
+* Open El País Opinion section
+* Extract first 5 valid articles
+* Capture Spanish content
+* Download article images
 
 ### Phase 2 — Data Processing
-- Translate article titles using Google Translate API
-- Normalize text data
-- Perform word repetition analysis
 
----
+* Translate titles to English
+* Normalize text
+* Perform word frequency analysis
 
-### Phase 3 — Cloud Test Execution
-- Connect to BrowserStack Automate
-- Execute Selenium tests on:
-  - Windows Chrome
-  - Windows Edge
-  - macOS Safari
-  - Samsung Galaxy S22
-  - iPhone 13
-- Run all tests in parallel
+### Phase 3 — Cloud Testing
+
+* Connect to BrowserStack Automate
+* Execute Selenium tests on:
+
+  * Windows Chrome
+  * Windows Edge
+  * macOS Safari
+  * Samsung Galaxy S22
+  * iPhone 13
+* Run tests in parallel
 
 ---
 
 ## ☁ BrowserStack Test Strategy
 
-| Category | Coverage |
-|---|---|
-| Desktop Browsers | Chrome, Edge, Safari |
-| Mobile Devices | Android + iOS |
-| Execution Mode | Parallel |
-| Test Type | Functional Validation |
+| Category         | Coverage              |
+| ---------------- | --------------------- |
+| Desktop Browsers | Chrome, Edge, Safari  |
+| Mobile Devices   | Android + iOS         |
+| Execution Mode   | Parallel              |
+| Test Type        | Functional Validation |
 
 ---
-
 
 ## ⚙ Technology Stack
 
 ### Automation
-- Selenium 4
-- WebDriver Manager
+
+* Selenium 4
+* WebDriver Manager
 
 ### Backend Processing
-- Python 3
-- Requests Library
-- Collections (Text Analytics)
+
+* Python 3
+* Requests Library
+* Collections (Text Analytics)
 
 ### Cloud Testing
-- BrowserStack Automate
-- Parallel Execution (Threading)
+
+* BrowserStack Automate
+* Parallel Execution (Threading)
 
 ### API Integration
-- RapidAPI Google Translate
+
+* RapidAPI – Google Translate
 
 ---
 
-## 🚀 Setup Instructions
+# 🔐 Environment Variables (.env Setup)
 
-### Install Dependencies
-
----
-
-### Run BrowserStack Parallel Execution
-Update credentials:
+⚠ **Important:**
+This project uses environment variables to securely store API credentials.
+Do NOT hardcode sensitive keys in the source code.
 
 ---
 
-### Run BrowserStack Parallel Execution
-Update credentials:
-USERNAME = "your_browserstack_username"
-ACCESS_KEY = "your_access_key"
+## Step 1: Create `.env` File
 
-Run:
+Create a file named:
+
+```
+.env
+```
+
+Add the following:
+
+```
+# ==========================
+# RapidAPI - Google Translate
+# ==========================
+RAPIDAPI_KEY=your_rapidapi_key_here
+
+# ==========================
+# BrowserStack Credentials
+# ==========================
+BROWSERSTACK_USERNAME=your_browserstack_username
+BROWSERSTACK_ACCESS_KEY=your_browserstack_access_key
+```
+
+---
+
+## Step 2: Install dotenv
+
+```bash
+pip install python-dotenv
+```
+
+---
+
+## Step 3: Load Environment Variables in Python
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
+BROWSERSTACK_USERNAME = os.getenv("BROWSERSTACK_USERNAME")
+BROWSERSTACK_ACCESS_KEY = os.getenv("BROWSERSTACK_ACCESS_KEY")
+```
+
+---
+
+## Step 4: Add `.env` to `.gitignore`
+
+Create or update `.gitignore`:
+
+```
+.env
+```
+
+This prevents secrets from being pushed to GitHub.
+
+---
+
+# 🚀 Setup Instructions
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3️⃣ Configure Environment Variables
+
+Create and configure your `.env` file as shown above.
+
+### 4️⃣ Run Tests
+
+```bash
 python browserstack_test.py
+```
 
 ---
 
 ## 📊 Logging & Monitoring
 
-The solution provides:
+The framework provides:
 
-- Device-specific execution logs
-- API response validation logs
-- Scraping progress tracking
-- Error-safe execution handling
+* Device-specific execution logs
+* API response validation logs
+* Scraping progress tracking
+* Error-safe exception handling
+* Parallel execution status tracking
 
 ---
 
 ## 🧠 Engineering Highlights
 
-✔ Handles dynamic website loading  
-✔ Uses explicit waits for stability  
-✔ Implements cloud-based automation testing  
-✔ Executes multi-device parallel testing  
-✔ Integrates external APIs reliably  
-✔ Maintains clean modular automation structure  
+✔ Dynamic website handling
+✔ Explicit waits for stability
+✔ Secure API credential management
+✔ Cloud-based parallel automation
+✔ Cross-device validation
+✔ Clean modular architecture
 
 ---
-
-## 👨‍💻 Author
-
-**Sanket Bauskar**  
-Computer Engineering Student  
 
 ---
 
 ## ⭐ Key Learning Outcomes
 
-- Real-world Selenium automation architecture
-- Cloud test infrastructure integration
-- Parallel execution design patterns
-- API + Automation system integration
-- Production-grade logging practices
+* Production-style Selenium automation
+* API + automation system integration
+* Cloud-based test infrastructure
+* Parallel execution design
+* Secure credential management
+* Structured logging practices
+
+---
+
+## 👨‍💻 Author
+
+Shaikh Shezan
+Information Technology Engineering Student
 
 ---
 
 ## 🙏 Acknowledgements
 
-- BrowserStack Cloud Testing Platform  
-- Selenium Open Source Community  
-- El País News Platform  
+* BrowserStack Cloud Testing Platform
+* Selenium Open Source Community
+* El País News Platform
